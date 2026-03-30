@@ -1,7 +1,7 @@
 name: Deploy to GitHub Pages
 on:
   push:
-    branches: [main] # 또는 master
+    branches: [main]
 permissions:
   contents: read
   pages: write
@@ -9,8 +9,19 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+        # Node.js 24 환경을 강제로 사용하도록 설정
+        FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        
       - name: Install, build, and upload with Astro
         uses: withastro/action@v3
+        with:
+          # 혹시 노드 버전 때문에 빌드가 막히면 여기서 명시
+          node-version: 24
+        
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

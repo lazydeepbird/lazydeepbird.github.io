@@ -4,6 +4,10 @@ import starlight from '@astrojs/starlight';
 
 // https://astro.build/config
 export default defineConfig({
+	// GitHub Pages 주소
+	site: 'https://lazydeepbird.github.io', 
+	// 루트 경로를 사용
+	// base: '/',
 	integrations: [
 		starlight({
 			title: 'My Docs',
