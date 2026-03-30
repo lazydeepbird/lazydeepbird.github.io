@@ -12,6 +12,8 @@ export default defineConfig({
 		starlight({
 			title: 'My Docs',
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
+			// 스타일 커스터마이징을 위한 CSS 파일 경로
+			customCss: ['./src/styles/custom.css'],
 			sidebar: [
 				{
 					label: '학습 요약',

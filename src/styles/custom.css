@@ -1,0 +1,14 @@
+/* src/styles/custom.css */
+
+:root {
+  /* 기본값은 보통 45rem 정도인데, 이걸 100%나 원하는 너비로 변경 */
+  /* --sl-content-width: 100%;  */
+  
+  /* 만약 양옆 여백을 조금 남기고 싶다면 아래처럼 설정 */
+  --sl-content-width: 80rem;
+}
+
+/* 메인 콘텐츠 영역의 전체 너비 제한 해제 */
+.main-frame {
+  max-width: 100% !important;
+}
