@@ -12,6 +12,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # 여기에 이거 한 줄 추가하면 경고 사라져!
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -19,7 +22,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 24 # 노드 버전은 최신으로 유지
+          node-version: 24
           cache: 'npm'
 
       - name: Install dependencies
@@ -29,7 +32,6 @@ jobs:
         run: npm run build
 
       - name: Upload artifact
-        # v5는 없고 v3가 최신이야! 이걸로 수정
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
@@ -37,11 +39,12 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    # 배포 단계에서도 경고 지우려면 똑같이 추가
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        # 얘도 v3가 최신 안정화 버전이야
         uses: actions/deploy-pages@v4
