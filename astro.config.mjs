@@ -14,6 +14,13 @@ export default defineConfig({
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
 			sidebar: [
 				{
+					label: '학습 요약',
+					items: [
+						// Each item here is one entry in the navigation menu.
+						{ label: 'n8n 완벽 가이드', slug: 'ai-specialist/01-n8n/n8n-perfect-guide' },
+					],
+				},
+				{
 					label: 'Guides',
 					items: [
 						// Each item here is one entry in the navigation menu.
