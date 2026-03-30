@@ -1,6 +1,6 @@
 ---
 title: n8n 완벽 가이드
-description: n8n 가이듣
+description: n8n 가이드
 ---
 
 ## 섹션1. AI Agent N8n

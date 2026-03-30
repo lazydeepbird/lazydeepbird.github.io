@@ -11,7 +11,7 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'My Docs',
-			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
+			social: [{ icon: 'github', label: 'LazyDeepbird', href: 'https://lazydeepbird.github.io/' }],
 			// 스타일 커스터마이징을 위한 CSS 파일 경로
 			customCss: ['./src/styles/custom.css'],
 			sidebar: [
