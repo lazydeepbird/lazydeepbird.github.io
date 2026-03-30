@@ -12,7 +12,6 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # 여기에 이거 한 줄 추가하면 경고 사라져!
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
@@ -25,12 +24,15 @@ jobs:
           node-version: 24
           cache: 'npm'
 
+      # 1. 의존성 설치 (이게 빠져서 에러 났던 거야!)
       - name: Install dependencies
         run: npm install
 
+      # 2. Astro 빌드
       - name: Build Astro
         run: npm run build
 
+      # 3. 빌드된 결과물 업로드
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -39,7 +41,6 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    # 배포 단계에서도 경고 지우려면 똑같이 추가
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     environment:
