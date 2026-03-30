@@ -14,13 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        # v4에서 v5로 업데이트 (Node 24 공식 지원)
-        uses: actions/checkout@v5 
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: 24 # 노드 버전은 최신으로 유지
           cache: 'npm'
 
       - name: Install dependencies
@@ -30,8 +29,8 @@ jobs:
         run: npm run build
 
       - name: Upload artifact
-        # v4에서 v5로 업데이트
-        uses: actions/upload-pages-artifact@v5
+        # v5는 없고 v3가 최신이야! 이걸로 수정
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
@@ -44,5 +43,5 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        # v4에서 v5로 업데이트
-        uses: actions/deploy-pages@v5
+        # 얘도 v3가 최신 안정화 버전이야
+        uses: actions/deploy-pages@v4
