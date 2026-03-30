@@ -1,27 +1,48 @@
 name: Deploy to GitHub Pages
+
 on:
   push:
     branches: [main]
+
 permissions:
   contents: read
   pages: write
   id-token: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-        # Node.js 24 환경을 강제로 사용하도록 설정
-        FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-        
-      - name: Install, build, and upload with Astro
-        uses: withastro/action@v3
+        # v4에서 v5로 업데이트 (Node 24 공식 지원)
+        uses: actions/checkout@v5 
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
         with:
-          # 혹시 노드 버전 때문에 빌드가 막히면 여기서 명시
           node-version: 24
-        
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Astro
+        run: npm run build
+
+      - name: Upload artifact
+        # v4에서 v5로 업데이트
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        # v4에서 v5로 업데이트
+        uses: actions/deploy-pages@v5
