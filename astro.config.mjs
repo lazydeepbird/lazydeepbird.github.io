@@ -19,6 +19,7 @@ export default defineConfig({
 					label: '학습 요약',
 					autogenerate: { directory: 'ai-specialist/01-n8n' },
 				},
+				// 기본 메뉴(주석 처리)
 //				{
 //					label: 'Guides',
 //					items: [

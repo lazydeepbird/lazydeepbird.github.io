@@ -22,9 +22,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: 'npm'
+          cache: "npm"
 
-      # 1. 의존성 설치 (이게 빠져서 에러 났던 거야!)
+      # 1. 의존성 설치
       - name: Install dependencies
         run: npm install
 
