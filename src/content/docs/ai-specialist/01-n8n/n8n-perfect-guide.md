@@ -37,7 +37,7 @@ description: n8n 가이드
   - n8n, Ollama, Qdrant, PostgreSQL 세트
 - Starter Kit git clone
 ```cli
-PS D:\_tinyLab\n8n-master> git clone https://github.com/n8n-io/self-hosted-ai-starter-kit.git
+PS > git clone https://github.com/n8n-io/self-hosted-ai-starter-kit.git
 Cloning into 'self-hosted-ai-starter-kit'...
 remote: Enumerating objects: 160, done.
 remote: Counting objects: 100% (2/2), done.
@@ -67,5 +67,40 @@ Resolving deltas: 100% (71/71), done.
 - chat message 에서 메세지 발송 시 오류가 날 경우
   - docker-compose.yml 파일에 `N8N_PUSH_BACKEND=websocket` 항목 추가 후 재 실행 `docker compose up -d --force-recreate`
 
+#### chat agent 구성 및 OpenAI API 키 설정
+- On Chat message → AI Agent 구성으로 간단한 AI Agent 생성
+- OpenAI API
+  - [OpenAI 개발자 페이지](https://platform.openai.com/)에서 API 키 생성 및 등록
+  - 생성된 키는 재확인 불가
 
-## 섹션3. 이메일 AI Agent
+### 4. 채팅Agent에 메모리 노드와 SerpAPI툴을 사용해 검색 능력 부여하기
+#### 메모리
+- 심플 메모리를 통해 이전 대화 저장
+- Context window 길이를 많이 잡을 수록 기억하는 내용이 많아지지만, 그만큼 토큰을 많이 사용
+- 5~10 정도로 설정
+#### SerpAPi (검색)
+- Google Search API
+- 회웍가입 후 이메일, 휴대폰 인증
+- free plan의 경우 월 250 검색 사용 가능
+#### 문제 해결
+n8n 버그로 SerpAPI 오류
+- SerpAPI Official 사용
+  - 툴 추가 검색에서는 하나만 검색되나, 전체 검색을 통해 Official을 install 할 수 있다
+  - 설치 후 검색을 통해 사용 가능
+- 이전 노드의 json사용
+  - https://www.inflearn.com/community/questions/1705920 에서 확인 가능
+- 검색 해보니 SerpAPI 보다는 Official 사용을 권장
+
+### 5. AI Agent에 직접 Google API 를 사용해서 구글 검색 툴 작성하기
+#### Google Gemini API 발급
+- 이 강좌에서는 두개의 Google API 사용(Gemini API, Custom Search API)
+- 이 중 **Custom Search API는 2026-1-21 공지를 통해 단계적으로 종료예정으로 신규 고객에게 제공하지 않으며, 기존 고객도 2027년 1월까지 제거될 예정**이라 함
+- **이에 따라 Google Search API는 사용할 수 없음** → 대안으로 Brave Search 사용
+- 강좌에서는 Google Cloud Console에서 발급을 받았으나, Google AI Studio에서 발급 받아 사용할 수도 있음(훨씬 단순함)
+#### Brave Search 사용
+- Brave Search API 발급
+  - https://brave.com/search/api/ 에 로그인(사용자 등록 후)하여 API 발급 가능
+  - 2,000/월 무료 사용 가능(1초당 1요처 제한) 
+
+
+> 계속 작성 중
