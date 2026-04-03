@@ -1,6 +1,6 @@
 ---
 title: n8n 완벽 가이드
-description: n8n 가이드
+description: n8n 가이드 학습 요약
 ---
 ## 개요
 사내 강좌를 통해 인프런의 [코딩 없이 AI 자동화 전문가가 되는 법, n8n 완벽 가이드](https://biz.inflearn.com/course/ai-%EC%9E%90%EB%8F%99%ED%99%94-n8n/dashboard?cid=337053) 강좌 수업에 대한 요약을 정리
@@ -8,6 +8,8 @@ description: n8n 가이드
 - 구분: n8n
 - 강사: 남박사
 - n8n site: https://n8n.io/
+- n8n 이름의 의미
+  - Node(노드) + Automation(자동화) = nodemation → n8n
 
 ## 섹션1. AI Agent N8n
 ### 1. AI Agent에 대한 이해와 각종 Tool에 대해 알아보기
@@ -100,7 +102,24 @@ n8n 버그로 SerpAPI 오류
 #### Brave Search 사용
 - Brave Search API 발급
   - https://brave.com/search/api/ 에 로그인(사용자 등록 후)하여 API 발급 가능
-  - 2,000/월 무료 사용 가능(1초당 1요처 제한) 
+  - 2,000/월 무료 사용 가능(1초당 1요청 제한) 
+### 6. 네이버 검색 API 를 추가하고 검색 기능을 서브 워크플로우로 작성하기
+#### 네이버 검색 API 생성
+- [네이버 개발자 센터](https://developers.naver.com/) 회원가입/로그인
+- `메뉴>Application>내 애플리케이션` 에서 새 Application등록
+  - 이름: n8n-search
+  - 사용API: 검색
+- 인증방식은 client id 와 client sercret을 http header로 전달
+#### n8n에서 http quest 노트로 구성
+- 헤더에 X-Naver-Client-Id, X-Naver-Client-Secret 추가
+#### 워크플로우 재사용
+- 구성된 워크플로우를 다른 워크플로우에서 호출 가능
+#### 복수 검색 결과 머지 및 출력 가능
+- 네이버, 구글 등의 검색 결과를 각각 수집하여 통합하여 사용
+- merge , aggregate 노드 사용
+#### 워크플로우 결합 시 테스트 방법
+- 호출되는 워크플로우에 Manual Trigger, set 노드 추가해서 테스트 가능
+- AI Agent 호출 없이 변수(query)설정 후 단독 테스트 가능
 
-
-> 계속 작성 중
+## 섹션3. 이메일 AI Agent
+### 7. AI로 네이버 스팸 메일 자동 분류하기: 이메일 에이전트 완전 자동화 실습
