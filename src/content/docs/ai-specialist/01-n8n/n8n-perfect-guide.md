@@ -103,6 +103,7 @@ n8n 버그로 SerpAPI 오류
 - Brave Search API 발급
   - https://brave.com/search/api/ 에 로그인(사용자 등록 후)하여 API 발급 가능
   - 2,000/월 무료 사용 가능(1초당 1요청 제한) 
+
 ### 6. 네이버 검색 API 를 추가하고 검색 기능을 서브 워크플로우로 작성하기
 #### 네이버 검색 API 생성
 - [네이버 개발자 센터](https://developers.naver.com/) 회원가입/로그인
@@ -110,7 +111,7 @@ n8n 버그로 SerpAPI 오류
   - 이름: n8n-search
   - 사용API: 검색
 - 인증방식은 client id 와 client sercret을 http header로 전달
-#### n8n에서 http quest 노트로 구성
+#### n8n에서 http quest 노드로 구성
 - 헤더에 X-Naver-Client-Id, X-Naver-Client-Secret 추가
 #### 워크플로우 재사용
 - 구성된 워크플로우를 다른 워크플로우에서 호출 가능
@@ -122,4 +123,41 @@ n8n 버그로 SerpAPI 오류
 - AI Agent 호출 없이 변수(query)설정 후 단독 테스트 가능
 
 ## 섹션3. 이메일 AI Agent
+
 ### 7. AI로 네이버 스팸 메일 자동 분류하기: 이메일 에이전트 완전 자동화 실습
+#### 이메일 자동 수신 설정
+- 트리거노드: Email Trigger (IMAP) 사용
+- 메일(Naver, Google 등) 설정 방법
+  - 네이버 메일 환경설정 진입 → IMAP/SMTP 사용
+  - 2단계 인증 설정된 경우 애플리케이션 비밀번호 생성 필요함
+  - 화면의 호스트, 포트 정보 확인하여 기입
+#### 자동 수신 메일 AI분석
+- 이메일 도착하면 AI워크플로 시작
+- Subject, text 를 AI프롬프트 입력하여 Spam여부 판단
+- Structured Output Parser 이용해 yes, no 처리
+#### 스팸여부 결과에 따른 분기 처리
+- Switch노드 이용하여 분기 처리
+- 이메일의 uid를 가져오기 위해 n8n 커뮤니티 노드 설치
+- 커뮤니티노드 검색 통해 imap 노드 인스톨
+- 추가 기능 설치로 스팸메일의 휴지통폴더로 이동 처리 
+
+### 8. Gmail연동부터 자동 응답까지: 이메일AI에이전트 완전 구축법
+#### Gmail 이메일 연동 및 노드 추가
+- 기존 이메일 트리거 복제 후 Gmail용으로 설정
+- imap.gmail.com 호스트 입력
+- 앱비밀번호 설정 후 입력
+  - 계정 설정 후 다른 계정들처럼 바로 성공되지 않음. 테스트 시 메일 내용 정상 수신 확인
+#### 디버깅 방법
+- 이메일의 경우 백그라운드 실행 됨
+- Executions 탭에서 실행 기록 확인해서 디버깅 진행
+#### 다양한 메일 구조 통합 처리 방법
+- Edit Fields 노드 이용해 분기 및 통합 처리
+- Edit Fields 노드 3개를 이용해서 각 메일의 구조 각각 통합 후 하나로 통합 처리
+#### 메일 내용 한글 깨짐 문제 처리
+- Gmail 텍스트 깨질 경우 Resolved로 변경
+- AI에게 그대로 전달하고 디코딩 요청하면 된다
+#### 오류 처리
+- Switch 또는 조건 비교에서 특정 노드의 데이터를 참조할 때 item 접근이 불가능한 경우 발생
+  - 해결법: first() 함수 사용
+  - 예: {{$node["메일 데이터"].first().json["from"]}}
+
